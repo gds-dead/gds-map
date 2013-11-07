@@ -1,5 +1,17 @@
 var width = 900;
 var height = 600;
+var mapScale = 2700;
+var translateX = width/3;
+var translateY = height/2;
+
+var mq = window.matchMedia( "(min-height: 1080px)" );
+if (mq.matches) {
+  width = 1500;
+  height = 900;
+  mapScale = 4800;
+  translateX = width/3.25;
+  translateY = height/1.65;
+}
 
 var svg = d3.select('#map');
 var overlay = d3.select('#overlay');
@@ -7,9 +19,9 @@ var overlay = d3.select('#overlay');
 var map = svg.append("g").attr("class", "map");
 var projection = d3.geo.albers();
     projection.center([-3,54]);       // center long and lat of the world
-    projection.translate([width/3, height/2]); // center pixel of the svg
+    projection.translate([translateX, translateY]); // center pixel of the svg
     projection.rotate([0,0]);         // rotation of the graph
-    projection.scale(2900);           // scale of the graph
+    projection.scale(mapScale);           // scale of the graph
 
 var path = d3.geo.path().projection(projection);
 d3.json('uk-outline.topo.json', function(json) {
